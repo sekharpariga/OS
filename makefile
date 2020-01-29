@@ -17,7 +17,7 @@ install: mykernel.bin
 	cp $< /boot/mykernel.bin
 
 
-mykernel.iso: mykernel.bin
+iso: mykernel.bin
 	mkdir iso
 	mkdir iso/boot
 	mkdir iso/boot/grub
@@ -28,7 +28,8 @@ mykernel.iso: mykernel.bin
 	echo '	multiboot /boot/mykernel.bin ' >> iso/boot/grub/grub.cfg
 	echo '	boot' >> iso/boot/grub/grub.cfg
 	echo '}' >> iso/boot/grub/grub.cfg
-	grub-mkrescue --output=$@ iso
+	grub-mkrescue --output=myOS.iso iso
+	rm -rf iso
 
 run: mykernel.iso
 	(killall VirtualBox && sleep 2) || true
