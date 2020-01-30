@@ -22,6 +22,6 @@ extern "C" void callConstructors()
 
 extern "C" void kernelMain(void* multiboot_structure, uint32_t  magicnumber)
 {
-    printf("Hello World!, Its Sekhar first OS\n");
+    printf("How are you Sekhar, Welcome to OS World\n");
     while(1);       //infinate loop
 }
