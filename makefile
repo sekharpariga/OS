@@ -37,3 +37,8 @@ cp:iso
 run: mykernel.iso
 	(killall VirtualBox && sleep 2) || true
 	VirtualBox --startvm "My OS" &
+
+.PHONY:clean
+clean:
+	rm -f $(objects) myOS.iso
+
