@@ -12,11 +12,12 @@ dataSegmentSelector(0,64*1024*1024, 0x92)
     i[1] = sizeof(globalDescriptorTable) << 16;
 
     asm volatile("lgdt (%0)": : "p" (((uint8_t *) i) +2));
-
 }
 
 globalDescriptorTable::~globalDescriptorTable()
-{}
+{
+    /* no code */
+}
 
 uint16_t globalDescriptorTable::DataSegmentselector()
 {

@@ -1,5 +1,5 @@
 #include "types.h"
-$include "gdt.h"
+#include "gdt.h"
 
 void printf(char* str)
 {
