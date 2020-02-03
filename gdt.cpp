@@ -76,7 +76,7 @@ uint16_t globalDescriptorTable::DataSegmentselector()
      result = (result << 8) + target[1];
      result = (result << 8) + target[0];
 
-     if(target[6] & 0xC0) == 0xC0)
+     if((target[6] & 0xC0) == 0xC0)
         result = (result << 12) | 0xFFF;
 
     return result; 
