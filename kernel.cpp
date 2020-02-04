@@ -1,6 +1,9 @@
 #include "types.h"
 #include "gdt.h"
 
+#define SCREEN_X 80
+#define SCREEN_Y 25
+
 void printf(char* str)
 {
     uint16_t * videoMemory = (uint16_t *) 0xb8000;
@@ -9,37 +12,33 @@ void printf(char* str)
     
     for(int i = 0; str[i] != '\0'; ++i)
     {
-        if(str[i] == '\n')
+        switch(str[i])
         {
-            y += 1;
-            x = 0;
-        }
-        if( y <= 80 & x <= 25)
-        {
-            videoMemory[i + (80*x) + y] = (videoMemory[i + (80*x) + y] & 0xFF00 )| str[i] ;
-        }
-        else
-        {
-            if(x == 25)
-            {
+            case '\n':
+                y++;
                 x = 0;
-                y += 1;
-            }
-            if( y == 255)
-            {
-                for(uint8_t x1 = 0; x1 <25; x1++)
-                    for(uint8_t y1 = 0; y1 < 80; y1++ )
-                    {
-                         videoMemory[(80*x1) + y1] = (videoMemory[ (80*x1) + y1] & 0xFF00 ) | ' ' ;
-                    }
-                    x = 0;
-                    y = 0;
-            }
+                break;
+            default :
+                videoMemory[SCREEN_X*y + x] = (videoMemory[SCREEN_X*y + x] & 0xFF00) | str[i] ;
+                x++;
         }
-        
+
+        if(x >= SCREEN_X)                 // completion of screen right side size
+        {
+            y++;
+            x =0;
+        }
+
+        if(y >= SCREEN_Y)                  // completion of bottom of screen
+        {
+            for(y = 0; y < SCREEN_Y; y++)
+                for(x = 0; x < SCREEN_X ; x++)
+                    videoMemory[SCREEN_X*y + x] = (videoMemory[SCREEN_X*y + x] & 0xFF00) | ' ' ;
+            x = 0;
+            y = 0;
+        }
     }
 }
-
 
 typedef void (*constructor)();
 extern "C" constructor start_ctors;
@@ -54,9 +53,9 @@ extern "C" void callConstructors()
 
 extern "C" void kernelMain(void* multiboot_structure, uint32_t  magicnumber)
 {
-    printf("How are you Sekhar, Welcome to OS World\n");
-    printf("Thank you, my pleasure");
-    printf("Your welcome :)");
+    printf("Hello Sekhar, Welcome to myOS  :)");
+    printf("\nDo you Want to see more of me ?\n");
+
     globalDescriptorTable gdt;
     while(1);       //infinite loop
 }
