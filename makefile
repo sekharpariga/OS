@@ -2,7 +2,7 @@ GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-excep
 ASPARAMS = --32			# 32 bit
 LDPARAMS = -melf_i386
 
-objects = loader.o kernel.o gdt.o
+objects = loader.o kernel.o gdt.o port.o
 
 %.o: %.cpp
 	g++ $(GPPPARAMS) -o $@ -c $<
@@ -40,5 +40,4 @@ run: mykernel.iso
 
 .PHONY:clean
 clean:
-	rm -f $(objects) myOS.iso
-
+	rm -f $(objects) myOS.iso mykernel.bin
