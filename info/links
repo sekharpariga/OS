@@ -1,0 +1,9 @@
+[repos]
+	git clone git://sourceware.org/git/binutils-gdb.git
+
+
+[gnu]
+	https://www.ibm.com/developerworks/systems/library/es-gnutool/
+
+
+[web]
