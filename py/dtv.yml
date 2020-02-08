@@ -1,0 +1,14 @@
+database:
+    username: "BTBSOURCE"
+    password: "Sobten4you"
+    sysdba: "n"
+    host: >
+            (DESCRIPTION =
+                    (ADDRESS = (PROTOCOL = TCP)
+                               (HOST = t1enb5d8.vci.att.com)
+                               (PORT = 1524)
+                    )
+                    (CONNECT_DATA = (SERVER = DEDICATED)
+                                    (SID = t1enb5d8)
+                    )
+            )

@@ -1,0 +1,14 @@
+database:
+    username: "CNVAPPDB31"
+    password: "CNVAPPDB31"
+    sysdba: "n"
+    host: >
+            (DESCRIPTION =
+                    (ADDRESS = (PROTOCOL = TCP)
+                               (HOST = indlin235)
+                               (PORT = 1521)
+                    )
+                    (CONNECT_DATA = (SERVER = DEDICATED)
+                                    (SID = CNVABP31)
+                    )
+            )
