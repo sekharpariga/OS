@@ -1,5 +1,6 @@
 #include "types.h"
 #include "gdt.h"
+#include "interrupts.h"
 
 #define SCREEN_X 80
 #define SCREEN_Y 25
@@ -57,5 +58,7 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t  magicnumber)
     printf("\nDo you Want to see more of me ?\n");
 
     globalDescriptorTable gdt;
+    InterruptManager interrupts(&gdt);
+    interrupts.Activate();
     while(1);       //infinite loop
 }
