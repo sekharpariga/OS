@@ -31,7 +31,7 @@ iso: mykernel.bin
 	grub-mkrescue --output=myOS.iso iso
 	rm -rf iso
 
-cp:iso
+cp: iso
 	cp ./myOS.iso /media/sf_nerd
 
 run: mykernel.iso
