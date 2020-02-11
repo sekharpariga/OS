@@ -44,16 +44,16 @@ picSlaveData(0xA1)
     picSlaveCommand.Write(0x11);
 
     picMasterData.Write(0x20);
-    picMasterData.Write(0x28);
+    picSlaveData.Write(0x28);
 
     picMasterData.Write(0x04);
-    picMasterData.Write(0x02);
+    picSlaveData.Write(0x02);
 
     picMasterData.Write(0x01);
-    picMasterData.Write(0x01);
+    picSlaveData.Write(0x01);
 
     picMasterData.Write(0x00);
-    picMasterData.Write(0x00);
+    picSlaveData.Write(0x00);
 
     interruptDescriptorTablePointer idt;
     idt.size = 256 * sizeof(GateDescriptor) - 1;
