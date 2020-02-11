@@ -7,3 +7,11 @@
 
 
 [web]
+
+
+[Assembly]
+	https://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html    #Linux Inline assembly
+
+
+[os]
+	https://wiki.osdev.org/Global_Descriptor_Table
