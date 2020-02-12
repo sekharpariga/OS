@@ -40,4 +40,4 @@ run: mykernel.iso
 
 .PHONY:clean
 clean:
-	rm -f $(objects) myOS.iso mykernel.bin
+	rm -f $(objects) myOS.iso mykernel.bin *.out

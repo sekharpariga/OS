@@ -5,11 +5,31 @@
 #include "port.h"
 #include "gdt.h"
 
-    class InterruptManager
+    class InterruptManager;
+    
+    class InterruptHandler
     {
         protected:
+            uint8_t interruptNumber;
+            InterruptManager* interruptManager;
 
+            InterruptHandler(uint8_t interruptNumber, InterruptManager* interruptManager);
+            ~InterruptHandler();
+        public:
+            uint32_t HandleInterrupt(uint32_t esp);
+
+    };
+
+
+
+    class InterruptManager
+    {
+        friend class InterruptHandler;
+
+        protected:
             static InterruptManager* ActivateInterruptManager;
+            InterruptHandler* handlers[256];
+
             struct GateDescriptor
             {
                 uint16_t handlerAddressLowBits;

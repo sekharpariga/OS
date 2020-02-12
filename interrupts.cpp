@@ -4,6 +4,24 @@
 
 void printf(char* str);
 
+InterruptHandler::InterruptHandler(uint8_t interruptNumber, InterruptManager* interruptManager)
+{
+    this->interruptNumber = interruptNumber;
+    this->interruptManager = interruptManager;
+    interruptManager->handlers[interruptNumber] = this;
+}
+
+InterruptHandler::~InterruptHandler()
+{
+    if(interruptManager->handlers[interruptNumber] == this)
+        interruptManager->handlers[interruptNumber] = 0;
+}
+
+uint32_t InterruptHandler::HandleInterrupt(uint32_t esp)
+{
+    return esp;
+}
+
 InterruptManager::GateDescriptor InterruptManager::interruptDescriptorTable[256];
 InterruptManager* InterruptManager::ActivateInterruptManager = 0;
 
