@@ -13,7 +13,8 @@
 
 static int hello_int(void)
 {
-	printk(KERNEL_ALART "I bear a charmed life. \n");
+	printk(KERN_ALERT "I bear a charmed life. \n");
+	return 0;
 }
 
 /*
@@ -22,7 +23,7 @@ static int hello_int(void)
 
 static void hello_exit(void)
 {
-	printk(KERNEL_ALART "Out, out, breif candle!\n");
+	printk(KERN_ALERT "Out, out, breif candle!\n");
 }
 
 module_init(hello_int);

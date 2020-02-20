@@ -1,7 +1,7 @@
 GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore		# 32 bit
 ASPARAMS = --32			# 32 bit
 LDPARAMS = -melf_i386
-
+obj-m = hello.o
 objects = loader.o gdt.o interrupts.o interruptstubs.o port.o keyboard.o kernel.o
 
 %.o: %.cpp
@@ -16,6 +16,8 @@ mykernel.bin: linker.ld $(objects)
 install: mykernel.bin
 	cp $< /boot/mykernel.bin
 
+mod:
+	make -C /lib/modules/$(shell uname -r)/build/ M=$(PWD) modules
 
 iso: mykernel.bin
 	mkdir iso
