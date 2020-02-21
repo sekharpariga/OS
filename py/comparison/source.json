@@ -1,0 +1,11 @@
+{
+    "source"        : "Oracle",
+    "dbOracle"      : 1,
+    "engines"       : 5,
+    "connString"    : "BTBSOURCE/Sobten4you@135.41.102.236:1524/t1enb5d8",
+    "qEntity"       : "select distinct entity_id from mir_inp_dox_dtv_b2b where entity_id is not null union select distinct entity_id from mir_inp_leg_dtv_b2b where entity_id is not null ",
+    "legData"       : "select * from mir_inp_leg_dtv_b2b where entity_id = 271764312",
+    "doxData"       : "select * from mir_inp_dox_dtv_b2b where entity_id = 271764312",
+    "legcompkeys"   : "ENTRY_AMOUNT",
+    "doxcompkeys"   : "AMOUNT"
+}
