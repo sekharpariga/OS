@@ -7,6 +7,9 @@ objects = loader.o gdt.o interrupts.o interruptstubs.o port.o keyboard.o kernel.
 %.o: %.cpp
 	g++ $(GPPPARAMS) -o $@ -c $<
 
+%.o: %.c
+	gcc -o $@  $<
+
 %.o : %.s
 	as $(ASPARAMS) -o $@ $<
 
@@ -42,4 +45,4 @@ run: mykernel.iso
 
 .PHONY:clean
 clean:
-	rm -f $(objects) myOS.iso mykernel.bin *.out
+	rm -f $(objects) myOS.iso mykernel.bin *.out *.o
