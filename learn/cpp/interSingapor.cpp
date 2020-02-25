@@ -32,7 +32,7 @@ std::string reverse_words(const std::string &str)
 
     /*
      *  Took unsigned long int
-     *  To support upto 2^32 char length of big input string 
+     *  To support upto 2^64 char length of big input string 
     */
     for(unsigned long int i = 0; i < str.length(); i++)
     {
