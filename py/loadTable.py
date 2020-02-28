@@ -21,12 +21,20 @@ print "\n\n", "Input provided"
 print 'delimitor : ' + delimitor
 print fileName, oraTable, "\n\n"
 
+with open(fileName, 'r') as f:
+	csvHeader = f.readline().strip()
+
+csvCols = csvHeader.split(delimitor)
+control = "options (skip=1) \n\nLOAD DATA\nTRUNCATE INTO TABLE " + oraTable + "\n"
+control += "FIELDS TERMINATED BY '" + delimitor + "'\n"
+control += "TRAILING NULLCOLS \n("
+control += (delimitor + "\n").join(csvCols)  + " )\n"
+
 conn = cx_Oracle.connect('MAXIS_B2B/MAXIS_B2B@kpb2bdbn03:1521/MAXATAPT02')
 cur = conn.cursor()
 
-cur.execute("SELECT 1 FROM USER_TABLES WHERE TABLE_NAME = '" + oraTable + "'")
-
 try:
+	cur.execute("SELECT 1 FROM USER_TABLES WHERE TABLE_NAME = '" + oraTable + "'")
 	tableExistFlag = cur.fetchall()[0][0]
 except:
 	tableExistFlag = 0
@@ -35,41 +43,16 @@ if tableExistFlag == 1 :
 	print oraTable + " Table Exist in DB"
 	cur.execute("select * from " + oraTable + " where 1 = 2")
 	curCols = [i[0] for i in cur.description]
+	alterSet = set(csvCols) - set(curCols)
+	if len(alterSet) > 0:
+		cur.execute("truncate table " + oraTable)
+		cur.execute("commit")
+		for col in alterSet:
+			cur.execute("alter table " + oraTable + " add " + col + " varchar2(4000)")
 else:
 	print oraTable + " Table Not exist DB"
-	curCols = []
-
-with open(fileName, 'r') as f:
-	csvHeader = f.readline().strip()
-
-csvCols = csvHeader.split(delimitor)
-
-if tableExistFlag == 0:
 	createTable = "create table " + oraTable + " (" + " varchar2(4000), ".join(csvCols[:-1]) + " varchar2(4000), " + csvCols[-1] + " varchar2(4000))"
 	cur.execute(createTable)
-	cur.execute("commit")
-	print "\n", createTable, "\n"
-
-control = "options (skip=1) \n\nLOAD DATA\nTRUNCATE INTO TABLE " + oraTable + "\n"
-control += "FIELDS TERMINATED BY '" + delimitor + "'\n"
-control += "TRAILING NULLCOLS \n("
-control += (delimitor + "\n").join(csvCols)  + " )\n"
-
-alterSet = set(csvCols) - set(curCols)
-print "number of columns to alter ", len(alterSet)
-
-if tableExistFlag == 1 and len(alterSet) > 0:
-	cur.execute("truncate table " + oraTable)
-	cur.execute("commit")
-	for col in alterSet:
-		cur.execute("alter table " + oraTable + " add " + col + " varchar2(4000)")
-	cur.execute("commit")
-else:
-	print "No Missing columns to alter in " + oraTable
-try:
-	os.remove(oraTable + '.ctl')
-except:
-	print oraTable + '.ctl', " File not found"
 
 with open(oraTable + '.ctl', 'w') as f:
 	f.write(control)
