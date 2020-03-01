@@ -2,7 +2,6 @@ import os
 import re
 
 def updateFile(fileName, grepStr):
-
     sourceFile = os.path.join(os.environ["SourcePath"],"develop/global/src/", fileName)
     envBuildNum = os.environ["BuildNum"]
     pattern = grepStr + "\=[\d]+"
@@ -20,9 +19,7 @@ def updateFile(fileName, grepStr):
     os.rename(tempFile,sourceFile)
 
 
-
 def main():
-
     updateFile("SConstruct","point")
     updateFile("VERSION","ADLMSDK_VERSION_POINT")
 
