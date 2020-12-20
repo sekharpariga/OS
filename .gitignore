@@ -36,3 +36,4 @@
 #others
 *.vscode
 check.cpp
+.DS_Store
